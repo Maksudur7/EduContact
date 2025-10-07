@@ -9,7 +9,6 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-
   const handleLogout = async () => {
     try {
       await logOut();
@@ -21,8 +20,11 @@ const Navbar = () => {
     }
   };
 
-  console.log(user?.email);
-  
+  const linkClass = ({ isActive }) =>
+    isActive
+      ? "text-blue-600 font-semibold border-b-2 border-blue-600 pb-1"
+      : "text-gray-700 hover:text-blue-600 transition";
+
   return (
     <nav className="w-full bg-white shadow-sm relative">
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
@@ -34,29 +36,28 @@ const Navbar = () => {
           <h1 className="text-xl font-semibold text-blue-500">EduConnect</h1>
         </div>
 
-
+        {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-8 text-sm">
-          <NavLink className="text-blue-500 hover:text-blue-700" to={"/"}>
+          <NavLink to="/" className={linkClass}>
             Home
           </NavLink>
-          <NavLink className="text-gray-700 hover:text-blue-700" to={"/collages"}>
+          <NavLink to="/collages" className={linkClass}>
             Colleges
           </NavLink>
-          <NavLink className="text-gray-700 hover:text-blue-700" to={"/admission"}>
+          <NavLink to="/admission" className={linkClass}>
             Admission
           </NavLink>
-          <NavLink className="text-gray-700 hover:text-blue-700" to={"/myCollage"}>
+          <NavLink to="/myCollage" className={linkClass}>
             My College
           </NavLink>
-
-
           {user?.email === "maksudurrahamanmishu7@gmail.com" && (
-            <NavLink className="text-gray-700 hover:text-blue-700" to={"/addCollage"}>
+            <NavLink to="/addCollage" className={linkClass}>
               Add College
             </NavLink>
           )}
         </div>
 
+        {/* Right Section */}
         <div className="flex items-center gap-3">
           {user?.email ? (
             <div className="relative">
@@ -79,6 +80,7 @@ const Navbar = () => {
                   {user.displayName || "My Profile"}
                 </span>
               </button>
+
               {showProfile && (
                 <div className="absolute right-0 mt-2 w-56 bg-white shadow-lg rounded-xl border p-4 z-50">
                   <div className="flex items-center space-x-3 border-b pb-3 mb-3">
@@ -126,7 +128,7 @@ const Navbar = () => {
             </NavLink>
           )}
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Toggle */}
           <button
             className="md:hidden text-gray-700 focus:outline-none"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -135,42 +137,24 @@ const Navbar = () => {
           </button>
         </div>
       </div>
+
+      {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-white border-t shadow-md px-6 py-4 space-y-4 text-sm">
-          <NavLink
-            to="/"
-            className="block text-gray-700 hover:text-blue-600"
-            onClick={() => setMenuOpen(false)}
-          >
+          <NavLink to="/" className={linkClass} onClick={() => setMenuOpen(false)}>
             Home
           </NavLink>
-          <NavLink
-            to="/collages"
-            className="block text-gray-700 hover:text-blue-600"
-            onClick={() => setMenuOpen(false)}
-          >
+          <NavLink to="/collages" className={linkClass} onClick={() => setMenuOpen(false)}>
             Colleges
           </NavLink>
-          <NavLink
-            to="/admission"
-            className="block text-gray-700 hover:text-blue-600"
-            onClick={() => setMenuOpen(false)}
-          >
+          <NavLink to="/admission" className={linkClass} onClick={() => setMenuOpen(false)}>
             Admission
           </NavLink>
-          <NavLink
-            to="/myCollage"
-            className="block text-gray-700 hover:text-blue-600"
-            onClick={() => setMenuOpen(false)}
-          >
+          <NavLink to="/myCollage" className={linkClass} onClick={() => setMenuOpen(false)}>
             My College
           </NavLink>
-          {user?.email === "maksudurrahamanmishu7@gmail.com"  && (
-            <NavLink
-              to="/addCollage"
-              className="block text-gray-700 hover:text-blue-600"
-              onClick={() => setMenuOpen(false)}
-            >
+          {user?.email === "maksudurrahamanmishu7@gmail.com" && (
+            <NavLink to="/addCollage" className={linkClass} onClick={() => setMenuOpen(false)}>
               Add College
             </NavLink>
           )}
