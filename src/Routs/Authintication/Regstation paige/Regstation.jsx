@@ -55,7 +55,7 @@ const Regstation = () => {
         navigate("/");
         const roll = 'user'
         const postData = { ...form, roll }
-        const res = await fetch('http://localhost:5000/user', {
+        const res = await fetch('https://collage-searvice-backend.vercel.app/user', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(postData)

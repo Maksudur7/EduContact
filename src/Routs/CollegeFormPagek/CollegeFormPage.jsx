@@ -43,7 +43,7 @@ export default function CollegeFormPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await fetch('http://localhost:5000/collages', {
+        const res = await fetch('https://collage-searvice-backend.vercel.app/collages', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData)

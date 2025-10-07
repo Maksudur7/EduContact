@@ -15,7 +15,7 @@ const AdmissionForm = () => {
         const submissionDate = new Date().toISOString();
         const formData = { ...infoData, name, subject, email, phone, address, dob, profile, submissionDate }
         console.log(formData);
-        const res = await fetch('http://localhost:5000/admission', {
+        const res = await fetch('https://collage-searvice-backend.vercel.app/admission', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData)

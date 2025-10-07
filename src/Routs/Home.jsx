@@ -12,7 +12,7 @@ const Home = () => {
     const [data, setData] = useState([])
     const [searchQuery, setSearchQuery] = useState("");
     useEffect(() => {
-        fetch("http://localhost:5000/collages")
+        fetch("https://collage-searvice-backend.vercel.app/collages")
             .then(res => res.json())
             .then(result => setData(result))
             .catch(error => console.log(error))

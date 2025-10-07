@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 const Admission = () => {
     const [data, setData] = useState([])
     useEffect(() => {
-        fetch("http://localhost:5000/collages")
+        fetch("https://collage-searvice-backend.vercel.app/collages")
             .then(res => res.json())
             .then(result => setData(result))
             .catch(error => console.log(error))
