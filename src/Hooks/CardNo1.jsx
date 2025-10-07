@@ -2,53 +2,13 @@ import React from "react";
 import { MapPin, CalendarDays, Star } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
-const CardNo1 = () => {
-    const colleges = [
-        {
-            name: "Harvard University",
-            image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800",
-            rating: 4.9,
-            location: "Cambridge, MA",
-            admissionDate: "12/1/2024",
-            researchProjects: 150,
-            events: ["Annual Science Fair", "Cultural Festival", "Tech Meet"],
-            sports: ["Basketball", "Football", "Baseball", "Swimming"],
-        },
-        {
-            name: "Stanford University",
-            image: "https://images.unsplash.com/photo-1503676382389-4809596d5290?w=800",
-            rating: 4.8,
-            location: "Stanford, CA",
-            admissionDate: "1/10/2025",
-            researchProjects: 120,
-            events: ["Innovation Week", "Sports Fest"],
-            sports: ["Tennis", "Basketball"],
-        },
-        {
-            name: "Harvard University",
-            image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800",
-            rating: 4.9,
-            location: "Cambridge, MA",
-            admissionDate: "12/1/2024",
-            researchProjects: 150,
-            events: ["Annual Science Fair", "Cultural Festival", "Tech Meet"],
-            sports: ["Basketball", "Football", "Baseball", "Swimming"],
-        },
-        {
-            name: "Stanford University",
-            image: "https://images.unsplash.com/photo-1503676382389-4809596d5290?w=800",
-            rating: 4.8,
-            location: "Stanford, CA",
-            admissionDate: "1/10/2025",
-            researchProjects: 120,
-            events: ["Innovation Week", "Sports Fest"],
-            sports: ["Tennis", "Basketball"],
-        },
-    ];
-
+const CardNo1 = ({ colleges = [] }) => {
+    const handleSave = (college) => {
+        localStorage.setItem("OneCollageData", JSON.stringify(college)); 
+    };
     return (
         <div className="flex flex-wrap justify-center gap-6 m-10">
-            {colleges.map((college, idx) => (
+            {colleges?.map((college, idx) => (
                 <div
                     key={idx}
                     className=" w-96  bg-white rounded-2xl shadow-md overflow-hidden border border-gray-200"
@@ -138,7 +98,7 @@ const CardNo1 = () => {
 
                         {/* Button */}
                         <NavLink to={'/collageDetails'} >
-                            <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-full font-medium">
+                            <button onClick={()=>handleSave(college)} className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-full font-medium">
                                 View Details
                             </button>
                         </NavLink>

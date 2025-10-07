@@ -1,35 +1,23 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Star, CalendarDays, Mail, Phone, MapPin, BookOpen, PlusCircle } from "lucide-react";
 import { GraduationCap } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from '../Authintication/AuthProvider file/AuthProvider';
 
 const MyCollage = () => {
-    const colleges = [
-        {
-            name: "Massachusetts Institute of Technology",
-            status: "pending",
-            applied: "October 6, 2025",
-            subject: "CSE",
-            email: "maksudursikder25@gmail.com",
-            phone: "2555225555",
-            address: "Kalishpri",
-            dob: "2000-12-03",
-            rating: "4.9",
-            admission: "August 15 - November 30, 2024",
-        },
-        {
-            name: "Harvard University",
-            status: "pending",
-            applied: "October 6, 2025",
-            subject: "CSE",
-            email: "maksudursikder25@gmail.com",
-            phone: "2555225555",
-            address: "Kalishpri",
-            dob: "2000-12-01",
-            rating: "4.7",
-            admission: "September 1 - January 1, 2025",
-        },
-    ];
+    const [colleges, setColleges] = useState([])
+      const { user } = useContext(AuthContext);
+    
+    useEffect(() => {
+        fetch("http://localhost:5000/admission")
+            .then(res => res.json())
+            .then(result => {
+              const res =   result.filter(e => e.email === user.email);
+              setColleges(res)
+            })
+            .catch(error => console.log(error))
+
+    }, [user.email])
 
     return (
         <section className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-blue-50 to-gray-100 px-4 py-12">
@@ -63,10 +51,10 @@ const MyCollage = () => {
                                         available colleges and applying to your preferred institutions.
                                     </p>
 
-                                    <button className="mt-6 flex items-center space-x-2 bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-full transition">
+                                    <NavLink to={'/admission'} className="mt-6 flex items-center space-x-2 bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-full transition">
                                         <GraduationCap className="w-4 h-4" />
                                         <span>Browse Colleges</span>
-                                    </button>
+                                    </NavLink>
                                 </div>
                             </div>
                         </div>
@@ -91,7 +79,7 @@ const MyCollage = () => {
                                     </div>
                                     <div className="flex items-center gap-3">
                                         <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-medium capitalize">
-                                            {college.status}
+                                            Panding
                                         </span>
                                         <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-full flex items-center gap-1">
                                             <PlusCircle size={16} />

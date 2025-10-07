@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { NavLink } from "react-router-dom";
 import { AuthContext } from '../AuthProvider file/AuthProvider';
+import { toast } from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const Regstation = () => {
     const [form, setForm] = useState({
@@ -13,21 +15,20 @@ const Regstation = () => {
     });
     const { createUser, updatePhoto } = useContext(AuthContext);
     const [error, setError] = useState("");
-    // const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    // Handle input changes
+   
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         setForm({ ...form, [name]: type === "checkbox" ? checked : value });
     };
 
-    // Handle submit
+ 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
 
-        // Basic validation
+      
         if (!form.name || !form.email || !form.password || !form.confirmPassword) {
             setError("Please fill out all fields.");
             return;
@@ -45,16 +46,30 @@ const Regstation = () => {
 
         const result = await createUser(form.email, form.password);
 
-        // ✅ Update profile with name and photo
         await updatePhoto(form.name, form.photoURL || "");
 
-        alert(`🎉 Welcome ${form.name}! Your account has been created.`);
+        
         console.log("Firebase User:", result.user);
 
-        // ✅ Redirect to login page
+       
         navigate("/");
-
-        // Reset form
+        const roll = 'user'
+        const postData = { ...form, roll }
+        const res = await fetch('http://localhost:5000/user', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(postData)
+        });
+        console.log(res);
+        if (res.ok) {
+            console.log('ok');
+            Swal.fire("Success", "Regestation successfully!", "success");
+            toast.success("Regestation successfully!");
+        } else {
+            toast.error("Failed to Regestation");
+            console.log('error');
+        }
+       
         setForm({
             name: "",
             email: "",

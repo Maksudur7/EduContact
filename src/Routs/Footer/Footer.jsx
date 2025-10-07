@@ -46,8 +46,8 @@ const Footer = () => {
                 <div>
                     <h3 className="font-semibold mb-3">Contact</h3>
                     <ul className="space-y-2 text-sm">
-                        <li>Email: <a href="mailto:info@educonnect.com" className="text-blue-600 hover:underline">info@educonnect.com</a></li>
-                        <li>Phone: <a href="tel:+15551234567" className="text-blue-600 hover:underline">+1 (555) 123-4567</a></li>
+                        <li>Email: <a href="mailto:info@educonnect.com" className="text-blue-600 hover:underline">makdudurrahamanmishu7@gmail.com</a></li>
+                        <li>Phone: <a href="tel:+15551234567" className="text-blue-600 hover:underline">+8801315906086</a></li>
                         <li>Support: <a href="mailto:support@educonnect.com" className="text-blue-600 hover:underline">support@educonnect.com</a></li>
                     </ul>
                 </div>
@@ -59,7 +59,7 @@ const Footer = () => {
             <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
                 <p>© 2025 EduConnect. All rights reserved.</p>
                 <p className="flex items-center gap-1 mt-2 md:mt-0">
-                    Made with <Heart size={14} className="text-red-500" /> for students worldwide
+                    Made with <Heart size={14} className="text-red-500" /> JavaScript
                 </p>
             </div>
         </footer>

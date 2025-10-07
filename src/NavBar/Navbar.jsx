@@ -6,10 +6,10 @@ import { AuthContext } from "../Routs/Authintication/AuthProvider file/AuthProvi
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const [showProfile, setShowProfile] = useState(false);
-  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
-  // Handle logout
+
   const handleLogout = async () => {
     try {
       await logOut();
@@ -21,15 +21,19 @@ const Navbar = () => {
     }
   };
 
+  console.log(user?.email);
+  
   return (
     <nav className="w-full bg-white shadow-sm relative">
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+        {/* Logo */}
         <div className="flex items-center space-x-2">
           <div className="bg-blue-500 text-white p-2 rounded-full">
             <GraduationCap size={20} />
           </div>
           <h1 className="text-xl font-semibold text-blue-500">EduConnect</h1>
         </div>
+
 
         <div className="hidden md:flex items-center space-x-8 text-sm">
           <NavLink className="text-blue-500 hover:text-blue-700" to={"/"}>
@@ -44,9 +48,13 @@ const Navbar = () => {
           <NavLink className="text-gray-700 hover:text-blue-700" to={"/myCollage"}>
             My College
           </NavLink>
-          <NavLink className="text-gray-700 hover:text-blue-700" to={"/addCollage"}>
-            Add College
-          </NavLink>
+
+
+          {user?.email === "maksudurrahamanmishu7@gmail.com" && (
+            <NavLink className="text-gray-700 hover:text-blue-700" to={"/addCollage"}>
+              Add College
+            </NavLink>
+          )}
         </div>
 
         <div className="flex items-center gap-3">
@@ -71,7 +79,6 @@ const Navbar = () => {
                   {user.displayName || "My Profile"}
                 </span>
               </button>
-
               {showProfile && (
                 <div className="absolute right-0 mt-2 w-56 bg-white shadow-lg rounded-xl border p-4 z-50">
                   <div className="flex items-center space-x-3 border-b pb-3 mb-3">
@@ -119,6 +126,7 @@ const Navbar = () => {
             </NavLink>
           )}
 
+          {/* Mobile Menu Button */}
           <button
             className="md:hidden text-gray-700 focus:outline-none"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -127,7 +135,6 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-
       {menuOpen && (
         <div className="md:hidden bg-white border-t shadow-md px-6 py-4 space-y-4 text-sm">
           <NavLink
@@ -158,13 +165,15 @@ const Navbar = () => {
           >
             My College
           </NavLink>
-          <NavLink
-            to="/addCollage"
-            className="block text-gray-700 hover:text-blue-600"
-            onClick={() => setMenuOpen(false)}
-          >
-            Add College
-          </NavLink>
+          {user?.email === "maksudurrahamanmishu7@gmail.com"  && (
+            <NavLink
+              to="/addCollage"
+              className="block text-gray-700 hover:text-blue-600"
+              onClick={() => setMenuOpen(false)}
+            >
+              Add College
+            </NavLink>
+          )}
         </div>
       )}
     </nav>

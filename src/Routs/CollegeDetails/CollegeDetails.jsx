@@ -11,36 +11,10 @@ const CollegeDetails = () => {
 
     // Dummy dynamic data (replace with API later)
     useEffect(() => {
-        const collegeData = {
-            id: 1,
-            name: "Massachusetts Institute of Technology",
-            rating: 4.8,
-            admissionPeriod: "August 15 - November 30, 2024",
-            admissionProcess: [
-                "Complete online application",
-                "Submit academic record for access",
-                "Include recommendation letters",
-                "Provide standardized test scores",
-                "Complete admission interview",
-                "Final evaluation",
-            ],
-            about:
-                "MIT has been at the forefront of scientific and technological advancement for over a century, producing countless innovations and Nobel Prize winners.",
-            research:
-                "Research spans Artificial Intelligence, Quantum Computing, Renewable Energy, and Aerospace Engineering.",
-            events:
-                "Annual Tech Fest, Research Symposium, Innovation Hackathon, and Cultural Nights are major events at MIT.",
-            sports: "Basketball, Swimming, Athletics, Soccer, and Badminton.",
-            gallery: [
-                "https://images.unsplash.com/photo-1550439062-609e1531270e",
-                "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=800",
-                "https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?w=800",
-            ],
-            banner:
-                "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1200&q=60",
-        };
-        setCollege(collegeData);
-
+        const storeCollageData = localStorage.getItem("OneCollageData");
+        if (storeCollageData) {
+            setCollege(JSON.parse(storeCollageData));
+        }
     }, []);
 
     if (!college) return <div className="p-10 text-center text-gray-600">Loading...</div>;

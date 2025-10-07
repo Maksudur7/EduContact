@@ -53,9 +53,12 @@ const AuthProvider = ({ children }) => {
         return signInWithPopup(auth, googleProvider);
     };
 
-    const resetPassword = (email) => {
+    const resetPassword = async (email) => {
         setLoading(true);
-        return sendPasswordResetEmail(auth, email);
+        console.log(email);
+        const res = await sendPasswordResetEmail(auth, email);
+        console.log(res);
+        return res
     };
     const facebookLogin = () => {
         setLoading(true);

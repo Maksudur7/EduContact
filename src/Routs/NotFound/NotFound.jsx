@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { motion } from "framer-motion";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Home } from "lucide-react";
+import { AuthContext } from "../Authintication/AuthProvider file/AuthProvider";
 
 const NotFound = () => {
+    const navigate = useNavigate();
+    const { user } = useContext(AuthContext);
+    console.log(user);
+    if (!user?.email) {
+        navigate('/login')
+    }
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 flex flex-col items-center justify-center text-center px-6">
             {/* Animated 404 Text */}

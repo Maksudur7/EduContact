@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Search } from "lucide-react";
 import CardNo1 from '../../Hooks/CardNo1';
 const CollageFetcher = () => {
+    const [data, setData] = useState([])
+    useEffect(() => {
+        fetch("http://localhost:5000/collages")
+            .then(res => res.json())
+            .then(result => setData(result))
+            .catch(error => console.log(error))
+
+    }, [])
     return (
         <div>
             <div className="h-[50vh] flex flex-col items-center justify-center bg-gradient-to-b from-[#f2f9ff] to-[#f7f7f7]">
@@ -28,7 +36,7 @@ const CollageFetcher = () => {
                     </button>
                 </div>
             </div>
-            <CardNo1></CardNo1>
+            <CardNo1 colleges={data} ></CardNo1>
         </div>
     );
 };

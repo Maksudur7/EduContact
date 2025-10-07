@@ -1,5 +1,6 @@
 import { useState } from "react";
-
+import Swal from "sweetalert2";
+import { Toaster, toast } from "react-hot-toast";
 export default function CollegeFormPage() {
     const [formData, setFormData] = useState({
         name: "",
@@ -40,10 +41,22 @@ export default function CollegeFormPage() {
         setFormData((prev) => ({ ...prev, [field]: updated }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("✅ Submitted Data:", formData);
-        alert("College data submitted! (Check console)");
+        const res = await fetch('http://localhost:5000/collages', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData)
+        });
+        console.log(res);
+        if (res.ok) {
+            console.log('ok');
+            Swal.fire("Success", "From Submit successfully!", "success");
+            toast.success("From Submit successfully!");
+        } else {
+            toast.error("Failed to From Submit");
+            console.log('error');
+        }
     };
 
     return (

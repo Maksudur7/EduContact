@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import Swal from "sweetalert2";
+import { Toaster, toast } from "react-hot-toast";
 import { Send } from "lucide-react";
 const AdmissionForm = () => {
-    const CollageName = JSON.parse(localStorage.getItem("CollageName"));
-    const handleSubmit = (e) => {
+    const infoData = JSON.parse(localStorage.getItem("infoData"));
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const college = CollageName
         const name = e.target.name.value;
         const subject = e.target.subject.value;
         const email = e.target.email.value;
@@ -12,9 +12,26 @@ const AdmissionForm = () => {
         const address = e.target.address.value;
         const dob = e.target.dob.value;
         const profile = e.target.profile.value;
-        const admissionData = { college, name, subject, email, phone, address, dob, profile }
-        console.log(admissionData);
+        const submissionDate = new Date().toISOString();
+        const formData = { ...infoData, name, subject, email, phone, address, dob, profile, submissionDate }
+        console.log(formData);
+        const res = await fetch('http://localhost:5000/admission', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData)
+        });
+        console.log(res);
+        if (res.ok) {
+            console.log('ok');
+            Swal.fire("Success", "From Submit successfully!", "success");
+            toast.success("From Submit successfully!");
+        } else {
+            toast.error("Failed to From Submit");
+            console.log('error');
+        }
+
     }
+
 
     return (
         <section className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-blue-50 to-gray-100 px-4 py-12">
@@ -42,7 +59,7 @@ const AdmissionForm = () => {
 
                 {/* Select College */}
                 <div className="mb-4">
-                    <h3 className='text-base font-semibold text-gray-800'>{CollageName}</h3>
+                    <h3 className='text-base font-semibold text-gray-800'>{infoData.name}</h3>
                 </div>
 
                 {/* Name + Subject */}

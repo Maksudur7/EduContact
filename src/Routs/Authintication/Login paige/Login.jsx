@@ -4,68 +4,87 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { AuthContext } from "../AuthProvider file/AuthProvider";
 import { useLocation, useNavigate } from "react-router";
+import Swal from "sweetalert2";
+import { Toaster, toast } from "react-hot-toast";
 
 const Login = () => {
     const navigate = useNavigate();
-    const location = useLocation();
+  const location = useLocation();
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    remember: false,
+  });
 
+  const { googleLogin, resetPassword, facebookLogin } = useContext(AuthContext);
 
-    const [form, setForm] = useState({
-        email: "",
-        password: "",
-        remember: false,
-    });
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setForm({ ...form, [name]: type === "checkbox" ? checked : value });
+  };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    toast.success("Login feature under development!");
+  };
 
-    const { googleLogin, resetPassword, facebookLogin } = useContext(AuthContext);
-    // Handle input changes
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setForm({ ...form, [name]: type === "checkbox" ? checked : value });
-    };
+  const handleGoogleLogin = async () => {
+    try {
+      const googleRes = await googleLogin();
+      toast.success("Google login successful!");
+      navigate(location?.state?.from?.pathname || "/");
+    } catch (err) {
+      toast.error("Google sign-in failed!");
+    }
+  };
 
-    // Handle form submit
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("Login Data:", form);
-    };
+  const handleFacebookLogin = async () => {
+    try {
+      const result = await facebookLogin();
+      Swal.fire({
+        title: "Success!",
+        text: "Facebook login successful!",
+        icon: "success",
+        confirmButtonColor: "#3b82f6",
+      });
+      console.log("Facebook User:", result.user);
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to login with Facebook!",
+        icon: "error",
+        confirmButtonColor: "#ef4444",
+      });
+    }
+  };
 
-    // Handle Google login
-    const handleGoogleLogin = async () => {
-        try {
-            await googleLogin();
-            navigate(location?.state?.from?.pathname || "/");
-        } catch (err) {
-            console.error(err);
-            // setError("Google sign-in failed");
-        }
-    };
-
-    // Handle Facebook login
-    const handleFacebookLogin = async() => {
-        try {
-            const result = await facebookLogin();
-            console.log("Facebook User:", result.user);
-            alert("Facebook login successful!");
-        } catch (error) {
-            console.error("Facebook Login Error:", error);
-            alert("Failed to login with Facebook!");
-        }
-    };
-
-    const handleForgotPassword = async () => {
-        if (!form.email) {
-            alert("Please enter your email first!");
-            return;
-        }
-        try {
-            await resetPassword(form.email);
-            alert("Password reset email sent!");
-        } catch (error) {
-            console.error(error);
-            alert("Failed to send reset email. Try again!");
-        }
-    };
+  const handleForgotPassword = async () => {
+    if (!form.email) {
+      Swal.fire({
+        title: "Wait!",
+        text: "Please enter your email first!",
+        icon: "warning",
+        confirmButtonColor: "#f59e0b",
+      });
+      return;
+    }
+    try {
+      await resetPassword(form.email);
+      Swal.fire({
+        title: "Email Sent!",
+        text: "Password reset email sent successfully.",
+        icon: "success",
+        confirmButtonColor: "#10b981",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to send reset email. Try again!",
+        icon: "error",
+        confirmButtonColor: "#ef4444",
+      });
+    }
+  };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">

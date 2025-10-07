@@ -28,7 +28,7 @@ const Profile = () => {
 
     // Save updates
     const handleSave = () => {
-        localStorage.setItem("profileData", JSON.stringify(profile)); // save to localStorage
+        localStorage.setItem("profileData", JSON.stringify(profile)); 
         setEditMode(false);
     };
 

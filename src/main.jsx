@@ -25,10 +25,7 @@ import PrivateRoute from './Routs/PrivateRoute/PrivateRoute.jsx';
 import Profile from './Profile/Profile.jsx';
 
 const router = createBrowserRouter([
-  {
-    path: '*',
-    element: <NotFound></NotFound>
-  },
+
   {
     path: "/",
     element: <App />,
@@ -51,7 +48,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/collageDetails",
-        element:  <PrivateRoute><CollegeDetails></CollegeDetails></PrivateRoute> ,
+        element: <PrivateRoute><CollegeDetails></CollegeDetails></PrivateRoute>,
         children: [
           {
             path: '/collageDetails',
@@ -91,9 +88,13 @@ const router = createBrowserRouter([
     element: <Regstation></Regstation>
   },
   {
-    path:"/profile",
+    path: "/profile",
     element: <Profile></Profile>
-  }
+  },
+  {
+    path: '*',
+    element: <NotFound></NotFound>
+  },
 
 ])
 
